@@ -57,6 +57,36 @@ public class EmpresaABC {
         return registro;
     }
 
+    public ArrayList<Integer> BuscarUsuario(int numero){
+        
+        ArrayList<Integer> Indices = new ArrayList<>();
+        int DigitosNum = Digitos(numero);
+        
+        for(int i = 0 ; i < Ruts.length ; i++){
+            if(DigitosNum<=Digitos(Ruts[i]) && numero == UltimosDigitos(Ruts[i] , DigitosNum)){
+                Indices.add(i);
+            }
+        }
+        
+        return Indices;
+    }
+    
+    private int Digitos(int numero){
+        String numeroComoString = String.valueOf(numero);
+        int cantidadDigitos = numeroComoString.length();
+        
+        return cantidadDigitos;
+    }
+    
+    private int UltimosDigitos(int numero, int digitos){
+        
+        String numeroString = String.valueOf(numero);
+        numeroString = numeroString.substring(0, digitos-1);
+        int ultimosDigitos = Integer.parseInt(numeroString);
+        
+        return ultimosDigitos;
+    }
+    
     public int[] getRuts() {
         return Ruts;
     }
