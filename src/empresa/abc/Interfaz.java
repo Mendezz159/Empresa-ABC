@@ -32,27 +32,26 @@ public class Interfaz extends javax.swing.JFrame {
         ArrayList<Integer> Indices = empresa.BuscarUsuario(Integer.parseInt(numerostring));
         
         ModeloListaEntera.removeAllElements();
-        if(Indices.size()==0 && fillBuscar.getText()==""){
-            for(int i = 0 ; i<empresa.getRuts().length ; i++){
-                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[i]+"; Sueldo: "+empresa.getSueldos()[i]);
-            }
-        }else{
+        if(!(fillBuscar.getText()=="")){
             for(int i = 0 ; i<Indices.size() ; i++){
                 int j = Indices.get(i);
                 ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[j]+"; Sueldo: "+empresa.getSueldos()[j]);
             }
+            System.out.println(ModeloListaEntera.size());
         }
     }
     public void RefrescarListaEntera(){
-        String numerostring = fillBuscar.getText();
-        ArrayList<Integer> Indices = empresa.BuscarUsuario(Integer.parseInt(numerostring));
+        
+        ArrayList<Integer> Indices;
         
         ModeloListaEntera.removeAllElements();
-        if(Indices.size()==0 && fillBuscar.getText()==""){
+        if(fillBuscar.getText().length()<=1){
             for(int i = 0 ; i<empresa.getRuts().length ; i++){
                 ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[i]+"; Sueldo: "+empresa.getSueldos()[i]);
             }
         }else{
+            String numerostring = fillBuscar.getText().substring(0, fillBuscar.getText().length()-1);
+            Indices = empresa.BuscarUsuario(Integer.parseInt(numerostring));
             for(int i = 0 ; i<Indices.size() ; i++){
                 int j = Indices.get(i);
                 ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[j]+"; Sueldo: "+empresa.getSueldos()[j]);
@@ -116,7 +115,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        EnunBusRut.setText("Buscar rut");
+        EnunBusRut.setText("Buscar RUT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
