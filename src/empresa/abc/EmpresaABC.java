@@ -15,18 +15,22 @@ import java.util.Random;
  */
 public class EmpresaABC {
 
-    private final int Ruts[] = new int[100];
-    private final float Sueldos[] = new float[100];
+    private int Ruts[] = new int[100];
+    private float Sueldos[] = new float[100];
     
     //metodo para generar los ruts y sueldos
     private void GenerarEmpleados(){
         Random random = new Random();
         
+        Ruts=this.ArrayUnicoAleatoreo(Ruts.length, 100000, 999999);
         for (int i = 0 ; i < Ruts.length ; i++){
-            Ruts[i] = random.nextInt(100000, 199999);
             Sueldos[i] = random.nextFloat(700000, 2000000);
         }
         
+        Organizado SegunRuts = new Organizado(Arrays.copyOf(Ruts, Ruts.length),Arrays.copyOf(Sueldos, Sueldos.length));
+        
+        Ruts= SegunRuts.getRuts();
+        Sueldos= SegunRuts.getSueldos();
     }
     
     //Genera un bono
@@ -49,7 +53,7 @@ public class EmpresaABC {
             Aumentos[i] = SueldosOriginales[i] * bono;
             SueldosTotales[i] = SueldosOriginales[i] + Aumentos[i];
             
-            Sueldos[i] = SueldosOriginales[i] + Aumentos[i];
+            Sueldos[indiceRut(Ruts[i])] = SueldosOriginales[i] + Aumentos[i];
         }
         
         RegistroBono registro = new RegistroBono(Ruts, SueldosOriginales, Aumentos, SueldosTotales);
@@ -85,6 +89,70 @@ public class EmpresaABC {
         int ultimosDigitos = Integer.parseInt(numeroString);
         
         return ultimosDigitos;
+    }
+    
+    private int indiceRut(int rut){
+        return this.BuscarInt(Ruts, rut, 0, Ruts.length);
+    }
+    
+    /**
+     * metodo de busqueda binaria para conseguir el indice del numero buscado
+     * 
+     * @param Arreglo el arreglo en el que se quiere buscar el numero
+     * @param numero el numero a buscar
+     * @param izquierda limite minimo del segmento del areglo en la que se busca
+     * @param derecha limite maximo del segmento del areglo en la que se busca
+     * @return indice en donde se encuentra el numero (retornara -1 si no lo encuentra)
+     */
+    private int BuscarInt(int[] Arreglo, int numero, int izquierda, int derecha){
+        
+        int centro = izquierda + ((derecha-izquierda)/2);
+        
+        if(izquierda > derecha){
+            return -1;
+        }
+        
+        if(Arreglo[centro] == numero){
+            return centro;
+        }else if(izquierda == derecha){
+            return -1;
+        }else if(Arreglo[centro] < numero){
+            return BuscarInt(Arreglo,numero,centro+1,derecha);
+        }else{
+            return BuscarInt(Arreglo,numero,izquierda,centro-1);
+        }
+        
+    }
+    
+    /**
+     * genera un arreglo con datos aleatoreos que no se repiten
+     * 
+     * @param tamaño Tamaño del arreglo
+     * @param NumeroMinimo el dato mas pequeño que puede ser generado aleatoreamente
+     * @param NumeroMaximo el dato mas grande que puede ser generado aleatoreamente
+     * @return un arreglo int con las caracteristicas pedidas
+     */
+    private int[] ArrayUnicoAleatoreo(int tamaño, int NumeroMinimo, int NumeroMaximo){
+        int[] array = new int[tamaño];
+        Random random = new Random();
+        
+        for(int i = 0 ; i < tamaño ; i++){
+            
+            boolean NumeroExistente;
+            
+            do{
+                int nuevoNum = random.nextInt(NumeroMinimo, NumeroMaximo);
+                
+                if(BuscarInt(array , nuevoNum , 0 , i-1) == -1){
+                    NumeroExistente = false;
+                    array[i]=nuevoNum;
+                }else{
+                    NumeroExistente = true;
+                }
+            }while(NumeroExistente);
+        }
+        
+        return array;
     }
     
     public int[] getRuts() {

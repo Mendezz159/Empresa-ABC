@@ -37,7 +37,6 @@ public class Interfaz extends javax.swing.JFrame {
                 int j = Indices.get(i);
                 ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[j]+"; Sueldo: "+empresa.getSueldos()[j]);
             }
-            System.out.println(ModeloListaEntera.size());
         }
     }
     public void RefrescarListaEntera(){
@@ -223,8 +222,10 @@ public class Interfaz extends javax.swing.JFrame {
     private void fillBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fillBuscarKeyTyped
         char i = evt.getKeyChar();
         
-        if (!Character.isDigit(i)){
+        if (!Character.isDigit(i) || fillBuscar.getText().length()==6){
             evt.consume();
+        }else{
+            RefrescarListaEntera(i);
         }
         
         
@@ -235,8 +236,6 @@ public class Interfaz extends javax.swing.JFrame {
         
         if (i=='\b'){
             RefrescarListaEntera();
-        }else if(Character.isDigit(i)){
-            RefrescarListaEntera(i);
         }
     }//GEN-LAST:event_fillBuscarKeyPressed
 
