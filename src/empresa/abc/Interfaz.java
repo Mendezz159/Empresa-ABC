@@ -4,19 +4,72 @@
  */
 package empresa.abc;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author HP PORTATIL
  */
 public class Interfaz extends javax.swing.JFrame {
 
+    private static EmpresaABC empresa = new EmpresaABC();
+    
+    private static DefaultListModel ModeloListaEntera = new DefaultListModel();
+    private static DefaultListModel ModeloListaBonos = new DefaultListModel();
+    
     /**
      * Creates new form Interfaz
      */
     public Interfaz() {
         initComponents();
+        ListaEntera.setModel(ModeloListaEntera);
+        ListaBonos.setModel(ModeloListaBonos);
     }
 
+    public void RefrescarListaEntera(char c){
+        String numerostring = fillBuscar.getText()+c;
+        ArrayList<Integer> Indices = empresa.BuscarUsuario(Integer.parseInt(numerostring));
+        
+        ModeloListaEntera.removeAllElements();
+        if(Indices.size()==0 && fillBuscar.getText()==""){
+            for(int i = 0 ; i<empresa.getRuts().length ; i++){
+                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[i]+"; Sueldo: "+empresa.getSueldos()[i]);
+            }
+        }else{
+            for(int i = 0 ; i<Indices.size() ; i++){
+                int j = Indices.get(i);
+                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[j]+"; Sueldo: "+empresa.getSueldos()[j]);
+            }
+        }
+    }
+    public void RefrescarListaEntera(){
+        String numerostring = fillBuscar.getText();
+        ArrayList<Integer> Indices = empresa.BuscarUsuario(Integer.parseInt(numerostring));
+        
+        ModeloListaEntera.removeAllElements();
+        if(Indices.size()==0 && fillBuscar.getText()==""){
+            for(int i = 0 ; i<empresa.getRuts().length ; i++){
+                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[i]+"; Sueldo: "+empresa.getSueldos()[i]);
+            }
+        }else{
+            for(int i = 0 ; i<Indices.size() ; i++){
+                int j = Indices.get(i);
+                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[j]+"; Sueldo: "+empresa.getSueldos()[j]);
+            }
+        }
+    }
+    
+    public void RefrescarListaBonos(){
+        RegistroBono unicoBono = empresa.GenerarBono();
+        
+        
+        ModeloListaBonos.removeAllElements();
+        for(int i =0;i<unicoBono.getRuts().length;i++){
+            ModeloListaBonos.addElement("Rut: "+unicoBono.getRuts()[i]+"; Aumento: "+unicoBono.getAumentos()[i]);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +79,170 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListaEntera = new javax.swing.JList<>();
+        fillBuscar = new javax.swing.JTextField();
+        EnunBusRut = new javax.swing.JLabel();
+        Error = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ListaBonos = new javax.swing.JList<>();
+        EnunMayor = new javax.swing.JLabel();
+        BonoMayor = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        EnunMenor = new javax.swing.JLabel();
+        BonoMenor = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setViewportView(ListaEntera);
+
+        fillBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fillBuscarActionPerformed(evt);
+            }
+        });
+        fillBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fillBuscarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fillBuscarKeyTyped(evt);
+            }
+        });
+
+        EnunBusRut.setText("Buscar rut");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fillBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EnunBusRut)
+                    .addComponent(Error, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(EnunBusRut)
+                        .addGap(18, 18, 18)
+                        .addComponent(fillBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Error, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Saldos", jPanel1);
+
+        jScrollPane2.setViewportView(ListaBonos);
+
+        EnunMayor.setText("Mayor Bono");
+
+        jButton1.setText("Crear bono");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        EnunMenor.setText("Menor bono");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EnunMayor)
+                    .addComponent(BonoMayor)
+                    .addComponent(EnunMenor)
+                    .addComponent(BonoMenor)
+                    .addComponent(jButton1))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(EnunMayor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BonoMayor)
+                .addGap(18, 18, 18)
+                .addComponent(EnunMenor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BonoMenor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(51, 51, 51))
+        );
+
+        jTabbedPane1.addTab("Bonos", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fillBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fillBuscarKeyTyped
+        char i = evt.getKeyChar();
+        
+        if (!Character.isDigit(i)){
+            evt.consume();
+        }
+        
+        
+    }//GEN-LAST:event_fillBuscarKeyTyped
+
+    private void fillBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fillBuscarKeyPressed
+        char i = evt.getKeyChar();
+        
+        if (i=='\b'){
+            RefrescarListaEntera();
+        }else if(Character.isDigit(i)){
+            RefrescarListaEntera(i);
+        }
+    }//GEN-LAST:event_fillBuscarKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        RefrescarListaBonos();
+        
+        this.jButton1.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void fillBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fillBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,7 +271,9 @@ public class Interfaz extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        EmpresaABC a = new EmpresaABC();
+        for(int i = 0 ; i<empresa.getRuts().length ; i++){
+                ModeloListaEntera.addElement("Rut: "+empresa.getRuts()[i]+"; Sueldo: "+empresa.getSueldos()[i]);
+            }
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -80,5 +284,20 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BonoMayor;
+    private javax.swing.JLabel BonoMenor;
+    private javax.swing.JLabel EnunBusRut;
+    private javax.swing.JLabel EnunMayor;
+    private javax.swing.JLabel EnunMenor;
+    private javax.swing.JLabel Error;
+    private javax.swing.JList<String> ListaBonos;
+    private javax.swing.JList<String> ListaEntera;
+    private javax.swing.JTextField fillBuscar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

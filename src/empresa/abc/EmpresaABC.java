@@ -81,7 +81,7 @@ public class EmpresaABC {
     private int UltimosDigitos(int numero, int digitos){
         
         String numeroString = String.valueOf(numero);
-        numeroString = numeroString.substring(0, digitos-1);
+        numeroString = numeroString.substring(0, digitos);
         int ultimosDigitos = Integer.parseInt(numeroString);
         
         return ultimosDigitos;
