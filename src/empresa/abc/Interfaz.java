@@ -62,10 +62,13 @@ public class Interfaz extends javax.swing.JFrame {
     
     public void RefrescarListaBonos(){
         RegistroBono unicoBono = empresa.GenerarBono();
+        int tamaño = unicoBono.getRuts().length;
         
+        BonoMayor.setText("Rut: "+unicoBono.getRuts()[tamaño-1]+"; Aumento: "+unicoBono.getAumentos()[tamaño-1]);
+        BonoMenor.setText("Rut: "+unicoBono.getRuts()[0]+"\n Aumento: "+unicoBono.getAumentos()[0]);
         
         ModeloListaBonos.removeAllElements();
-        for(int i =0;i<unicoBono.getRuts().length;i++){
+        for(int i =0;i<tamaño;i++){
             ModeloListaBonos.addElement("Rut: "+unicoBono.getRuts()[i]+"; Aumento: "+unicoBono.getAumentos()[i]);
         }
     }
@@ -122,12 +125,17 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fillBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EnunBusRut)
-                    .addComponent(Error, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(Error, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(fillBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(EnunBusRut)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +147,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(EnunBusRut)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fillBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Error, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -172,10 +180,10 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(EnunMayor)
                     .addComponent(BonoMayor)
+                    .addComponent(jButton1)
                     .addComponent(EnunMenor)
-                    .addComponent(BonoMenor)
-                    .addComponent(jButton1))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(BonoMenor))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +196,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(EnunMayor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BonoMayor)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addComponent(EnunMenor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BonoMenor)
