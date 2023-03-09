@@ -15,15 +15,11 @@ import java.util.Random;
  */
 public class EmpresaABC {
 
-    private static final int Ruts[] = new int[100];
-    private static final float Sueldos[] = new float[100];
+    private final int Ruts[] = new int[100];
+    private final float Sueldos[] = new float[100];
     
-    private static final int BenefRuts[] = new int[30];
-    private static final float BenefSueldos[][] = new float[30][2];
-    
-    private static Organizado SegunPrecios;
-    
-    private static void GenerarEmpleados(){
+    //metodo para generar los ruts y sueldos
+    private void GenerarEmpleados(){
         Random random = new Random();
         
         for (int i = 0 ; i < Ruts.length ; i++){
@@ -33,33 +29,44 @@ public class EmpresaABC {
         
     }
     
-    public static void GenerarBono(){
-        SegunPrecios = new Organizado(Arrays.copyOf(Sueldos, Sueldos.length),Arrays.copyOf(Ruts, Ruts.length));
+    //Genera un bono
+    public RegistroBono GenerarBono(){
+        Organizado SegunPrecios = new Organizado(Arrays.copyOf(Sueldos, Sueldos.length),Arrays.copyOf(Ruts, Ruts.length));
+        
+        int Ruts[] = new int[30];
+        float[] SueldosOriginales, Aumentos, SueldosTotales;
+        
+        SueldosOriginales = new float[30];
+        Aumentos = new float[30];
+        SueldosTotales = new float[30];
         
         float bono = (float) 0.05;
         
         for (int i = 0 ; i < 30 ; i++){
-            BenefRuts[i] = SegunPrecios.getRuts()[i];
-            BenefSueldos[i][0] = SegunPrecios.getSueldos()[i];
-            BenefSueldos[i][1] = BenefSueldos[i][0] * bono;
-            Sueldos[i] = BenefSueldos[i][0] + BenefSueldos[i][1];
+            
+            Ruts[i] = SegunPrecios.getRuts()[i];
+            SueldosOriginales[i] = SegunPrecios.getSueldos()[i];
+            Aumentos[i] = SueldosOriginales[i] * bono;
+            SueldosTotales[i] = SueldosOriginales[i] + Aumentos[i];
+            
+            Sueldos[i] = SueldosOriginales[i] + Aumentos[i];
         }
+        
+        RegistroBono registro = new RegistroBono(Ruts, SueldosOriginales, Aumentos, SueldosTotales);
+        
+        return registro;
+    }
+
+    public int[] getRuts() {
+        return Ruts;
+    }
+
+    public float[] getSueldos() {
+        return Sueldos;
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        int[] numeros =    {2,1,3,6,7,8,9,5,4,1,2};
-        float[] numeros2 = {7,6,4,9,3,4,7,8,1,6,5};
-        Organizado Anumeros = new Organizado(Arrays.copyOf(numeros, numeros.length),Arrays.copyOf(numeros2, numeros2.length));
-        Organizado Anumeros2 = new Organizado(Arrays.copyOf(numeros2, numeros2.length),Arrays.copyOf(numeros, numeros.length));
-        
-        System.out.println(Arrays.toString(Anumeros.getRuts()));
-        System.out.println(Arrays.toString(Anumeros.getSueldos()));
-        
-        System.out.println(Arrays.toString(Anumeros2.getRuts()));
-        System.out.println(Arrays.toString(Anumeros2.getSueldos()));
+    public EmpresaABC(){
+        GenerarEmpleados();
     }
-    
+       
 }
